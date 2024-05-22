@@ -3,15 +3,19 @@ import PackageDescription
 
 let package = Package(
     name: "Addition",
+    platforms: [
+        .iOS(.v16) 
+    ],
     products: [
         .library(
             name: "Addition",
-            targets: ["Addition"]),
+            targets: ["Addition"]
+        ),
     ],
     targets: [
         .binaryTarget(
             name: "Addition",
-            url: "https://github.com/yourusername/yourpublicrepo/raw/main/Addition.xcframework.zip",
-            checksum: "CHECKSUM")
+            path: "Addition/Addition.xcframework"
+        )
     ]
 )
