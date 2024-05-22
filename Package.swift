@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Addition",
+    name: "MathOperations",
     products: [
         .library(
             name: "Addition",
@@ -20,17 +20,17 @@ let package = Package(
             targets: ["Subtraction"]),
     ],
     targets: [
-      .binaryTarget(
-          name: "Addition",
-         path: "./Addition/Addition.xcframework.zip"),
-      .binaryTarget(
-          name: "Division",
-         path: "./Division/Division.xcframework.zip"),
-      .binaryTarget(
-          name: "Multiplication",
-         path: "./Multiplication/Multiplication.xcframework.zip"),
-      .binaryTarget(
-          name: "Subtraction",
-         path: "./Subtraction/Subtraction.xcframework.zip"),
-
-    ])
+        .binaryTarget(
+            name: "Addition",
+            path: "./Addition/Addition.xcframework"),
+        .binaryTarget(
+            name: "Division",
+            path: "./Division/Division.xcframework"),
+        .binaryTarget(
+            name: "Multiplication",
+            path: "./Multiplication/Multiplication.xcframework"),
+        .binaryTarget(
+            name: "Subtraction",
+            path: "./Subtraction/Subtraction.xcframework"),
+    ]
+)
