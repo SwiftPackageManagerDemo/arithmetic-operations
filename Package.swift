@@ -22,15 +22,15 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "Addition",
-            path: "./Addition/Addition.xcframework"),
+            path: "./Addition/Addition.xcframework.zip"),
         .binaryTarget(
             name: "Division",
-            path: "./Division/Division.xcframework"),
+            path: "./Division/Division.xcframework.zip"),
         .binaryTarget(
             name: "Multiplication",
-            path: "./Multiplication/Multiplication.xcframework"),
+            path: "./Multiplication/Multiplication.xcframework.zip"),
         .binaryTarget(
             name: "Subtraction",
-            path: "./Subtraction/Subtraction.xcframework"),
+            path: "./Subtraction/Subtraction.xcframework.zip"),
     ]
 )
