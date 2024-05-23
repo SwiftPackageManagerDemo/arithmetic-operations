@@ -15,11 +15,16 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: public-repo
 
-      - name: Clone private repository
-        env:
-          PAT: ${{ secrets.PAT }}
+      - name: Set up SSH
         run: |
-          git clone https://github-actions:${{ secrets.PAT }}@github.com/SwiftPackageManagerDemo/Addition.git private-repo
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Clone private repository
+        run: |
+          git clone git@github.com:SwiftPackageManagerDemo/Addition.git private-repo
           cd private-repo
           git checkout main
 
@@ -30,14 +35,14 @@ jobs:
       - name: Configure Git
         run: |
           cd public-repo
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "iamviveklalan@gmail.com"
+          git config --global user.name "Vivek Lalan"
 
       - name: Commit and Push to Public Repo
         env:
-          PAT: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd public-repo
           git add Framework/Addition.xcframework.zip
           git commit -m "Add Addition.xcframework.zip"
-          git push https://github-actions:${{ secrets.PAT }}@github.com/vivektechyogi/arithmetic-operations.git main
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/vivektechyogi/arithmetic-operations.git main
