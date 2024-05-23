@@ -30,7 +30,7 @@ jobs:
 
       - name: Copy XCFramework to Public Repo
         run: |
-          cp private-repo/Framework/Addition.xcframework.zip public-repo/Framework/
+          cp private-repo/Framework/Addition.xcframework.zip public-repo/
 
       - name: Configure Git
         run: |
