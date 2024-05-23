@@ -20,8 +20,6 @@ jobs:
           git clone https://github.com/SwiftPackageManagerDemo/Addition.git private-repo
           cd private-repo
           git checkout main
-        env:
-          PAT: ${{ secrets.PAT }}
 
       - name: Copy XCFramework to Public Repo
         run: |
@@ -32,4 +30,4 @@ jobs:
           cd public-repo
           git add Framework/Addition.xcframework.zip
           git commit -m "Add Addition.xcframework.zip"
-          git push https://github-actions:${{ secrets.PAT }}@github.com/vivektechyogi/arithmetic-operations.git main
+          git push https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/vivektechyogi/arithmetic-operations.git main
