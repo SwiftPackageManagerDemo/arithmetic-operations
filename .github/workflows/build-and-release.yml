@@ -11,7 +11,7 @@ jobs:
       - name: Checkout public repository
         uses: actions/checkout@v2
         with:
-          repository: vivektechyogi/arithmetic-operations
+          repository: SwiftPackageManagerDemo/arithmetic-operations
           token: ${{ secrets.GITHUB_TOKEN }}
           path: public-repo
 
