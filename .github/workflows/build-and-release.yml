@@ -11,10 +11,15 @@ jobs:
       - name: Checkout public repository
         uses: actions/checkout@v2
         with:
-          repository: SwiftPackageManagerDemo/arithmetic-operations
           token: ${{ secrets.GITHUB_TOKEN }}
           path: public-repo
 
+      - name: Configure Git
+        run: |
+          cd public-repo
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          
       - name: Clone private repository
         run: |
           git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/SwiftPackageManagerDemo/Addition.git private-repo
@@ -30,4 +35,4 @@ jobs:
           cd public-repo
           git add Framework/Addition.xcframework.zip
           git commit -m "Add Addition.xcframework.zip"
-          git push https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/vivektechyogi/arithmetic-operations.git main
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/vivektechyogi/arithmetic-operations.git main
