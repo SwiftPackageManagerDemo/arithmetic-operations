@@ -16,11 +16,6 @@ jobs:
         mkdir -p framework
         curl -L -o framework/EsVoiceCall.xcframework.zip https://es-sc-ios-sdk.s3.ap-southeast-2.amazonaws.com/EsVoiceCall/EsVoiceCall.xcframework.zip
 
-    - name: Unzip Framework
-      run: |
-        unzip framework/EsVoiceCall.xcframework.zip -d framework
-        rm framework/EsVoiceCall.xcframework.zip
-
     - name: Commit and Push
       run: |
         git add framework
