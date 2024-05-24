@@ -4,28 +4,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  download_commit_push:
+  download-and-commit:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Download xcframework zip
-      run: wget -O Addition/EsVoiceCall.xcframework.zip https://es-sc-ios-branding-sdk.s3.ap-southeast-2.amazonaws.com/EsVoiceCall/EsVoiceCall.xcframework.zip
-
-    - name: Unzip the framework
+    - name: Download Framework
       run: |
         mkdir -p framework
-        unzip Addition/EsVoiceCall.xcframework.zip -d Addition/
-        rm Addition/EsVoiceCall.xcframework.zip
+        curl -L -o framework/EsVoiceCall.xcframework.zip https://es-sc-ios-sdk.s3.ap-southeast-2.amazonaws.com/EsVoiceCall/EsVoiceCall.xcframework.zip
 
-    - name: Commit changes
+    - name: Unzip Framework
       run: |
-        git add Addition/
-        git commit -m "Add downloaded xcframework"
+        unzip framework/EsVoiceCall.xcframework.zip -d framework
+        rm framework/EsVoiceCall.xcframework.zip
 
-    - name: Push changes
+    - name: Commit and Push
+      run: |
+        git add framework
+        git commit -m "Add downloaded framework"
+        git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: git push
