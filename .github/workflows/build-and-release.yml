@@ -1,48 +1,33 @@
-name: Copy XCFramework from Private to Public Repo
+name: Update Checksum and Link
 
 on:
-  workflow_dispatch:  # Manually triggered for demonstration; you can customize this trigger
+  repository_dispatch:
+    types: [update-checksum]
 
 jobs:
-  copy:
+  update-files:
+    name: Update Checksum and Link
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout public repository
-        uses: actions/checkout@v2
-        with:
-          repository: vivektechyogi/arithmetic-operations
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: public-repo
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+    - name: Update Package.swift
+      run: |
+        VERSION="${{ github.event.client_payload.version }}"
+        CHECKSUM="${{ github.event.client_payload.checksum }}"
+        URL="${{ github.event.client_payload.url }}"
 
-      - name: Clone private repository
-        run: |
-          git clone git@github.com:SwiftPackageManagerDemo/Addition.git private-repo
-          cd private-repo
-          git checkout main
+        # Assuming the link and checksum are in Package.swift or another known file
+        sed -i '' -e "s|url: .*|url: \"$URL\",|" -e "s|checksum: .*|checksum: \"$CHECKSUM\"|" Package.swift
 
-      - name: Copy XCFramework to Public Repo
-        run: |
-          cp private-repo/Framework/Addition.xcframework.zip public-repo/Addition/
-
-      - name: Configure Git
-        run: |
-          cd public-repo
-          git config --global user.email "iamviveklalan@gmail.com"
-          git config --global user.name "Vivek Lalan"
-
-      - name: Commit and Push to Public Repo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          cd public-repo
-          git add Addition/Addition.xcframework.zip
-          git commit -m "Add Addition.xcframework.zip"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/vivektechyogi/arithmetic-operations.git main
+    - name: Commit changes
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@users.noreply.github.com'
+        git add Package.swift
+        git commit -m "Update framework to $VERSION"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
