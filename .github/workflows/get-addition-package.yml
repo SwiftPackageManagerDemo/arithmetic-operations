@@ -19,6 +19,11 @@ jobs:
         mkdir -p EsVoiceCall
         curl -L -o EsVoiceCall/EsVoiceCall.xcframework.zip https://es-sc-ios-sdk.s3.ap-southeast-2.amazonaws.com/EsVoiceCall/EsVoiceCall.xcframework.zip
 
+    - name: Configure Git
+      run: |
+        git config --global user.name 'Vivek Lalan'
+        git config --global user.email 'iamviveklalan@gmail..com'
+        
     - name: Add to Git and Commit
       run: |
         git add EsVoiceCall/EsVoiceCall.xcframework.zip
