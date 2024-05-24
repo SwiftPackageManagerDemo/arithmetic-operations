@@ -2,7 +2,7 @@ name: Update Checksum and Link
 
 on:
   repository_dispatch:
-    types: [update-checksum]
+    types: [xcframework-released]
 
 jobs:
   update-files:
