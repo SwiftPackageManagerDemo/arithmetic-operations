@@ -21,7 +21,7 @@ jobs:
 
     - name: Add to Git and Commit
       run: |
-        git add framework/EsVoiceCall.xcframework.zip
+        git add EsVoiceCall/EsVoiceCall.xcframework.zip
         git commit -m "Add downloaded framework zip file"
         git push
       env:
