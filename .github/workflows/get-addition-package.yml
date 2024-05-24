@@ -12,17 +12,17 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Download xcframework zip
-      run: wget -O framework/EsVoiceCall.xcframework.zip https://es-sc-ios-branding-sdk.s3.ap-southeast-2.amazonaws.com/EsVoiceCall/EsVoiceCall.xcframework.zip
+      run: wget -O Addition/EsVoiceCall.xcframework.zip https://es-sc-ios-branding-sdk.s3.ap-southeast-2.amazonaws.com/EsVoiceCall/EsVoiceCall.xcframework.zip
 
     - name: Unzip the framework
       run: |
         mkdir -p framework
-        unzip framework/EsVoiceCall.xcframework.zip -d framework/
-        rm framework/EsVoiceCall.xcframework.zip
+        unzip Addition/EsVoiceCall.xcframework.zip -d Addition/
+        rm Addition/EsVoiceCall.xcframework.zip
 
     - name: Commit changes
       run: |
-        git add framework/
+        git add Addition/
         git commit -m "Add downloaded xcframework"
 
     - name: Push changes
