@@ -51,7 +51,8 @@ jobs:
       run: |
         # Fetch all tags from the remote repository
         git fetch --tags
-
+        LATEST_TAG=$(git tag | sort -V | tail -n 1)
+        echo "Latest tag: $LATEST_TAG"
         # Check if the current commit can be described by a tag
         LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
         echo "Latest tag: $LATEST_TAG"
