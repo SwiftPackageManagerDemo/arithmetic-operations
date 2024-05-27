@@ -54,6 +54,7 @@ jobs:
 
         # Check if the current commit can be described by a tag
         LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
+        echo "Latest tag: $LATEST_TAG"
 
         if [ -z "$LATEST_TAG" ]; then
           echo "No tag can describe the current commit."
