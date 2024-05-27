@@ -49,9 +49,22 @@ jobs:
     - name: Get Last Tag
       id: last_tag
       run: |
-          git fetch --tags
-          git describe --tags --abbrev=0 > last_tag.txt || echo "1.0.0" > last_tag.txt
-          echo "LAST_TAG=$(<last_tag.txt)" >> $GITHUB_ENV
+        git fetch --tags
+
+        # Debugging: List all tags
+        echo "Available tags:"
+        git tag -l
+
+        # Get the most recent tag and handle the case where no tags are found
+        TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "1.0.0")
+        echo "Resolved tag: $TAG"
+        echo "$TAG" > last_tag.txt
+
+        # Debugging: Output the contents of last_tag.txt
+        cat last_tag.txt
+
+        # Set the environment variable in GitHub Actions
+        echo "LAST_TAG=$(<last_tag.txt)" >> $GITHUB_ENV
 
     - name: Increment Tag
       id: increment_tag
