@@ -14,10 +14,32 @@ jobs:
     - name: Change to Project Directory
       run: cd $GITHUB_WORKSPACE
 
+    - name: Verify Zip Checksum
+      run: |
+          local_checksum=$(sha256sum EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $1}')
+          echo "::set-output name=local_checksum::$local_checksum"
+          
     - name: Download Framework
       run: |
         mkdir -p EsVoiceCall
         curl -L -o EsVoiceCall/EsVoiceCall.xcframework.zip https://es-sc-ios-sdk.s3.ap-southeast-2.amazonaws.com/EsVoiceCall/EsVoiceCall.xcframework.zip
+
+
+    - name: Get New Downloaded Zip Checksum
+      run: |
+          remote_checksum=$(sha256sum EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $1}')
+          echo "::set-output name=remote_checksum::$remote_checksum"
+
+    - name: Compare Checksums
+      id: compare
+      run: |
+          if [ "${{ steps.download-and-commit.outputs.local_checksum }}" != "${{ steps.download-and-commit.outputs.remote_checksum }}" ]; then
+            echo "Checksums are different."
+            echo "::set-output name=different_checksums::true"
+          else
+            echo "Checksums are the same."
+            echo "::set-output name=different_checksums::false"
+          fi
 
     - name: Configure Git
       run: |
