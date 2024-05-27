@@ -52,20 +52,6 @@ jobs:
         # Fetch all tags from the remote repository
         git fetch --tags
         LATEST_TAG=$(git tag | sort -V | tail -n 1)
-        echo "Latest tag: $LATEST_TAG"
-        # Check if the current commit can be described by a tag
-        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
-        echo "Latest tag: $LATEST_TAG"
-
-        if [ -z "$LATEST_TAG" ]; then
-          echo "No tag can describe the current commit."
-          echo "Checking out the latest tagged commit."
-          # Get the latest tag
-          LATEST_TAG=$(git tag | sort -V | tail -n 1)
-          git checkout "$LATEST_TAG"
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
-        fi
-
         # Print the latest tag
         echo "Latest tag: $LATEST_TAG"
         echo "LAST_TAG=$LATEST_TAG" >> $GITHUB_ENV
