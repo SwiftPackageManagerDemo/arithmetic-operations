@@ -16,7 +16,7 @@ jobs:
 
     - name: Verify Zip Checksum
       run: |
-          local_checksum=$(sha256sum EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $1}')
+          local_checksum=$(openssl sha256 EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $2}')
           echo "LOCAL_CHECKSUM=$local_checksum" >> $GITHUB_ENV
           
     - name: Download Framework
@@ -27,7 +27,7 @@ jobs:
 
     - name: Get New Downloaded Zip Checksum
       run: |
-          remote_checksum=$(sha256sum EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $1}')
+          remote_checksum=$(openssl sha256 EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $2}')
           echo "REMOTE_CHECKSUM=$remote_checksum" >> $GITHUB_ENV
 
     - name: Compare Checksums
