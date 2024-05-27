@@ -16,17 +16,17 @@ jobs:
 
     - name: Verify Zip Checksum
       run: |
-          local_checksum=$(openssl sha256 EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $2}')
+          local_checksum=$(openssl sha256 Addition/Addition.xcframework.zip | awk '{print $2}')
           echo "LOCAL_CHECKSUM=$local_checksum" >> $GITHUB_ENV
           
     - name: Download Framework
       run: |
-        mkdir -p EsVoiceCall
-        curl -L -o EsVoiceCall/EsVoiceCall.xcframework.zip https://es-sc-ios-branding-sdk.s3.ap-southeast-2.amazonaws.com/EsVoiceCall/EsVoiceCall.xcframework.zip
+        mkdir -p Addition
+        curl -L -o Addition/Addition.xcframework.zip https://es-sc-ios-branding-sdk.s3.ap-southeast-2.amazonaws.com/arithmetic-operations/Addition.xcframework.zip
 
     - name: Get New Downloaded Zip Checksum
       run: |
-          remote_checksum=$(openssl sha256 EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $2}')
+          remote_checksum=$(openssl sha256 Addition/Addition.xcframework.zip | awk '{print $2}')
           echo "REMOTE_CHECKSUM=$remote_checksum" >> $GITHUB_ENV
 
     - name: Compare Checksums
@@ -73,7 +73,7 @@ jobs:
       if: ${{ env.DIFFERENT_CHECKSUMS == 'true' }}
       run: |
         git checkout main  
-        git add EsVoiceCall/EsVoiceCall.xcframework.zip
+        git add Addition/Addition.xcframework.zip
         git commit -m "Version ${{ env.NEW_TAG }}"
         git pull
         git tag ${{ env.NEW_TAG }} -m "Version ${{ env.NEW_TAG }} \n $RELEASE_NOTE"
