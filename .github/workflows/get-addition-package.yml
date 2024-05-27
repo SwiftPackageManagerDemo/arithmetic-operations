@@ -49,21 +49,37 @@ jobs:
     - name: Get Last Tag
       id: last_tag
       run: |
-          git fetch --tags
-          git describe --tags --abbrev=0 > last_tag.txt || echo "1.0.1" > last_tag.txt
-          echo "LAST_TAG=$(<last_tag.txt)" >> $GITHUB_ENV
+        # Fetch all tags from the remote repository
+        git fetch --tags
+
+        # Check if the current commit can be described by a tag
+        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
+
+        if [ -z "$LATEST_TAG" ]; then
+          echo "No tag can describe the current commit."
+          echo "Checking out the latest tagged commit."
+          # Get the latest tag
+          LATEST_TAG=$(git tag | sort -V | tail -n 1)
+          git checkout "$LATEST_TAG"
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
+        fi
+
+        # Print the latest tag
+        echo "Latest tag: $LATEST_TAG"
+        echo "LAST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
     - name: Increment Tag
       id: increment_tag
       run: |
-          tag_parts=($(echo $LAST_TAG | tr '.' ' '))
-          patch=$((tag_parts[2] + 1))
-          NEW_TAG="${tag_parts[0]}.${tag_parts[1]}.$patch"
-          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+        tag_parts=($(echo $LAST_TAG | tr '.' ' '))
+        patch=$((tag_parts[2] + 1))
+        NEW_TAG="${tag_parts[0]}.${tag_parts[1]}.$patch"
+        echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
 
     - name: Update Tag and Push
       if: ${{ env.DIFFERENT_CHECKSUMS == 'true' }}
       run: |
+        git checkout main  # Ensure we are on the main branch
         git pull
         git add EsVoiceCall/EsVoiceCall.xcframework.zip
         git commit -m "Add downloaded framework zip file"
@@ -72,3 +88,4 @@ jobs:
         git push origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
