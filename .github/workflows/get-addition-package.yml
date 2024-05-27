@@ -64,14 +64,19 @@ jobs:
         NEW_TAG="${tag_parts[0]}.${tag_parts[1]}.$patch"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
 
+    - name: Get last commit message
+      run: |
+        aws s3 cp s3://es-sc-ios-branding-sdk/arithmetic-operations/release_notes.txt release_notes.txt
+        echo "RELEASE_NOTE=$(<release_notes.txt)" >> $GITHUB_ENV
+
     - name: Update Tag and Push
       if: ${{ env.DIFFERENT_CHECKSUMS == 'true' }}
       run: |
         git checkout main  
         git add EsVoiceCall/EsVoiceCall.xcframework.zip
-        git commit -m "Add downloaded framework zip file"
+        git commit -m "Version ${{ env.NEW_TAG }}"
         git pull
-        git tag ${{ env.NEW_TAG }} -m "Version ${{ env.NEW_TAG }}"
+        git tag ${{ env.NEW_TAG }} -m "Version ${{ env.NEW_TAG }} \n $RELEASE_NOTE"
         git push --tags
         git push origin main
       env:
