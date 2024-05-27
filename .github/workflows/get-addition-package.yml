@@ -67,10 +67,10 @@ jobs:
     - name: Update Tag and Push
       if: ${{ env.DIFFERENT_CHECKSUMS == 'true' }}
       run: |
-        git checkout main  # Ensure we are on the main branch
-        git pull
+        git checkout main  
         git add EsVoiceCall/EsVoiceCall.xcframework.zip
         git commit -m "Add downloaded framework zip file"
+        git pull
         git tag ${{ env.NEW_TAG }} -m "Version ${{ env.NEW_TAG }}"
         git push --tags
         git push origin main
