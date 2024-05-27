@@ -50,7 +50,7 @@ jobs:
       id: last_tag
       run: |
           git fetch --tags
-          git describe --tags --abbrev=0 > last_tag.txt || echo "1.0.0" > last_tag.txt
+          git describe --tags --abbrev=0 > last_tag.txt || echo "1.0.1" > last_tag.txt
           echo "LAST_TAG=$(<last_tag.txt)" >> $GITHUB_ENV
 
     - name: Increment Tag
