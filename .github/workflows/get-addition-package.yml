@@ -50,7 +50,7 @@ jobs:
       id: last_tag
       run: |
         git fetch --tags
-
+        git describe --tags --abbrev=0
         # Debugging: List all tags
         echo "Available tags:"
         git tag -l
