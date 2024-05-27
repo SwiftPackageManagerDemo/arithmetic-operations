@@ -55,7 +55,7 @@ jobs:
         git tag -l
 
         # Get the most recent tag and handle the case where no tags are found
-        TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "1.0.0")
+        TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "1.0.1")
         echo "Resolved tag: $TAG"
         echo "$TAG" > last_tag.txt
 
