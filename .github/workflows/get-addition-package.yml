@@ -17,7 +17,7 @@ jobs:
     - name: Verify Zip Checksum
       run: |
           local_checksum=$(sha256sum EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $1}')
-          echo "Local Zip Checksum: $local_checksum"
+          echo "LOCAL_CHECKSUM=$local_checksum" >> $GITHUB_ENV
           
     - name: Download Framework
       run: |
@@ -28,17 +28,17 @@ jobs:
     - name: Get New Downloaded Zip Checksum
       run: |
           remote_checksum=$(sha256sum EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $1}')
-          echo "Remote Zip Checksum: $remote_checksum"
+          echo "REMOTE_CHECKSUM=$remote_checksum" >> $GITHUB_ENV
 
     - name: Compare Checksums
       id: compare
       run: |
-          if [ "${{ steps.download-and-commit.outputs.local_checksum }}" != "${{ steps.download-and-commit.outputs.remote_checksum }}" ]; then
+          if [ "${{ env.LOCAL_CHECKSUM }}" != "${{ env.REMOTE_CHECKSUM }}" ]; then
             echo "Checksums are different."
-            echo "::set-output name=different_checksums::true"
+            echo "DIFFERENT_CHECKSUMS=true" >> $GITHUB_ENV
           else
             echo "Checksums are the same."
-            echo "::set-output name=different_checksums::false"
+            echo "DIFFERENT_CHECKSUMS=false" >> $GITHUB_ENV
           fi
 
     - name: Configure Git
