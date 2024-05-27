@@ -45,12 +45,31 @@ jobs:
       run: |
         git config --global user.name 'Vivek Lalan'
         git config --global user.email 'iamviveklalan@gmail..com'
+
         
-    - name: Add to Git and Commit
+    - name: Get Last Tag
+      id: last_tag
+      run: |
+          git fetch --tags
+          git describe --tags --abbrev=0 > last_tag.txt || echo "1.0.0" > last_tag.txt
+          echo "LAST_TAG=$(<last_tag.txt)" >> $GITHUB_ENV
+
+    - name: Increment Tag
+      id: increment_tag
+      run: |
+          tag_parts=($(echo $LAST_TAG | tr '.' ' '))
+          patch=$((tag_parts[2] + 1))
+          NEW_TAG="${tag_parts[0]}.${tag_parts[1]}.$patch"
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+
+    - name: Update Tag and Push
+      if: ${{ env.DIFFERENT_CHECKSUMS == 'true' }}
       run: |
         git pull
         git add EsVoiceCall/EsVoiceCall.xcframework.zip
         git commit -m "Add downloaded framework zip file"
-        git push
+        git tag ${{ env.NEW_TAG }} -m "Version ${{ env.NEW_TAG }}"
+        git push --tags
+        git push origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
