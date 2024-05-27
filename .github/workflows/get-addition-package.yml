@@ -17,7 +17,7 @@ jobs:
     - name: Verify Zip Checksum
       run: |
           local_checksum=$(sha256sum EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $1}')
-          echo "::set-output name=local_checksum::$local_checksum"
+          echo "Local Zip Checksum: $local_checksum"
           
     - name: Download Framework
       run: |
@@ -28,7 +28,7 @@ jobs:
     - name: Get New Downloaded Zip Checksum
       run: |
           remote_checksum=$(sha256sum EsVoiceCall/EsVoiceCall.xcframework.zip | awk '{print $1}')
-          echo "::set-output name=remote_checksum::$remote_checksum"
+          echo "Remote Zip Checksum: $remote_checksum"
 
     - name: Compare Checksums
       id: compare
