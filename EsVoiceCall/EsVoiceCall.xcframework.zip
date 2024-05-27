@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>es-sc-ios-sdk</BucketName><RequestId>7BCZT29PVBREVNQD</RequestId><HostId>Lb5euyU8y2uJnbHdnTRBu6YhjavmB4nCF09kOm9O/rMGMikHpvtYFVQDTadJheTuSTT7StoVn2KTSr8yIWHqQQ==</HostId></Error>
+<Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>es-sc-ios-sdk</BucketName><RequestId>W7EE10R9BF1V5H4P</RequestId><HostId>RSqA5EyaOlQ4Fj8AmKRtjXaj3yXW/dGy3+YaZ5QgXQJFVOcjoxReH+hjbYta3YueOCYMFl7NKc0=</HostId></Error>
