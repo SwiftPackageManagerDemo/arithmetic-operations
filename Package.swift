@@ -17,5 +17,10 @@ let package = Package(
   targets: [
     .binaryTarget(
       name: "SecuredCallsSDK",
-      path: "./SDK/SecuredCallsSDK.xcframework.zip")
+      path: "./SDK/SecuredCallsSDK.xcframework.zip"),
+    
+            dependencies: [
+                "Swinject",
+                "SwinjectAutoregistration"
+            ]),
   ])
