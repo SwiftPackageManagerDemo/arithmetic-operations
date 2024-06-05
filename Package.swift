@@ -4,23 +4,28 @@
 import PackageDescription
 
 let package = Package(
-  name: "SecuredCallsSDK",
-  products: [
-    .library(
-      name: "SecuredCallsSDK",
-      targets: ["SecuredCallsSDK"])
-  ],
+    name: "SecuredCallsSDK",
+    products: [
+        .library(
+            name: "SecuredCallsSDK",
+            targets: ["SecuredCallsSDK"])
+    ],
     dependencies: [
         .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.8"),
-        .package(url: "https://github.com/Swinject/SwinjectAutoregistration", from: "2.8.4")
+        .package(url: "https://github.com/Swinject/SwinjectAutoregistration.git", from: "2.8.4")
     ],
-  targets: [
-    .binaryTarget(
-      name: "SecuredCallsSDK",
-      path: "./SDK/SecuredCallsSDK.xcframework.zip"),
-    
+    targets: [
+        .binaryTarget(
+            name: "SecuredCallsSDK",
+            path: "./SDK/SecuredCallsSDK.xcframework.zip"
+        ),
+        .target(
+            name: "SecuredCallsSDKWrapper",
             dependencies: [
                 "Swinject",
-                "SwinjectAutoregistration"
-            ]),
-  ])
+                "SwinjectAutoregistration",
+                "SecuredCallsSDK"
+            ]
+        )
+    ]
+)
