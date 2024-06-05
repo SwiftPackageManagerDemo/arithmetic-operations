@@ -8,7 +8,7 @@ let package = Package(
     products: [
         .library(
             name: "SecuredCallsSDK",
-            targets: ["SecuredCallsSDK"])
+            targets: ["SecuredCallsSDKWrapper"])
     ],
     dependencies: [
         .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.8"),
