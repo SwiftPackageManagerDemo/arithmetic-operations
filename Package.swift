@@ -25,8 +25,7 @@ let package = Package(
                 .product(name: "Swinject" package: "Swinject")
                 .product(name: "SwinjectAutoregistration" package: "SwinjectAutoregistration")
                 "SecuredCallsSDK"
-            ],
-            path: "./Sources/SecuredCallsSDKWrapper" // Specify the correct path to your source files
+            ]
         )
     ]
 )
