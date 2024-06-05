@@ -10,6 +10,10 @@ let package = Package(
       name: "SecuredCallsSDK",
       targets: ["SecuredCallsSDK"])
   ],
+    dependencies: [
+        .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.8"),
+        .package(url: "https://github.com/Swinject/SwinjectAutoregistration", from: "2.8.4")
+    ],
   targets: [
     .binaryTarget(
       name: "SecuredCallsSDK",
