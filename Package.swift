@@ -22,8 +22,8 @@ let package = Package(
         .target(
             name: "SecuredCallsSDKWrapper",
             dependencies: [
-                .product(name: "Swinject" package: "Swinject")
-                .product(name: "SwinjectAutoregistration" package: "SwinjectAutoregistration")
+                .product(name: "Swinject" package: "Swinject"),
+                .product(name: "SwinjectAutoregistration" package: "SwinjectAutoregistration"),
                 "SecuredCallsSDK"
             ]
         )
