@@ -25,7 +25,8 @@ let package = Package(
                 "Swinject",
                 "SwinjectAutoregistration",
                 "SecuredCallsSDK"
-            ]
+            ],
+            path: "./Sources/SecuredCallsSDKWrapper" // Specify the correct path to your source files
         )
     ]
 )
