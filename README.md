@@ -1,22 +1,23 @@
-<!-- HTML button for copy -->
-<button onclick="copyToClipboard('text-to-copy')">Click to copy</button>
+# Click to Copy Example
 
-<!-- Text to copy -->
-<pre id="text-to-copy">This is the text you want to copy.</pre>
+Below is an example of a button that lets you copy some text to your clipboard.
 
-<!-- JavaScript for copy functionality -->
+<div style="margin-bottom: 10px;">
+  <input id="copyText" type="text" value="Hello, this text will be copied!" style="width: 100%; padding: 8px;" readonly>
+</div>
+
+<button onclick="copyToClipboard()" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px;">
+  Click to Copy
+</button>
+
 <script>
-function copyToClipboard(elementId) {
-  // Get the text content from the element
-  const text = document.getElementById(elementId).textContent;
-  
-  // Use the Clipboard API to copy the text
-  navigator.clipboard.writeText(text).then(() => {
-    alert('Text copied to clipboard!');
-  }).catch(err => {
-    console.error('Failed to copy text: ', err);
-  });
-}
+  function copyToClipboard() {
+    const text = document.getElementById('copyText');
+    text.select();
+    text.setSelectionRange(0, 99999); /* For mobile devices */
+    navigator.clipboard.writeText(text.value);
+    alert('Copied: ' + text.value);
+  }
 </script>
 
 # Hi SecuredCalls SDK Integration Guide
