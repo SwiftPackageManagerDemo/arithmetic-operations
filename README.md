@@ -1,3 +1,24 @@
+<!-- HTML button for copy -->
+<button onclick="copyToClipboard('text-to-copy')">Click to copy</button>
+
+<!-- Text to copy -->
+<pre id="text-to-copy">This is the text you want to copy.</pre>
+
+<!-- JavaScript for copy functionality -->
+<script>
+function copyToClipboard(elementId) {
+  // Get the text content from the element
+  const text = document.getElementById(elementId).textContent;
+  
+  // Use the Clipboard API to copy the text
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Text copied to clipboard!');
+  }).catch(err => {
+    console.error('Failed to copy text: ', err);
+  });
+}
+</script>
+
 # Hi SecuredCalls SDK Integration Guide
 
 This guide provides step-by-step instructions for integrating the SecuredCalls SDK into your iOS app using Swift Package Manager (SPM).
